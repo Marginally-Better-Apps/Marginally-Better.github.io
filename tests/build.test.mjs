@@ -123,9 +123,18 @@ test('untrusted display metadata stays text and unsafe links cannot execute', as
     details: { 'Escape-Me': { title: injection, icon: injection, privacy_url: 'data:text/html,<script>alert(5)</script>' } },
     policies: { 'Escape-Me': '<p>Published policy</p>' },
   });
-  for (const html of [home, await readFile(join(output, 'privacy/index.html'), 'utf8'), await readFile(join(output, 'privacy/escape-me/index.html'), 'utf8')]) {
+  const pages = [
+    { html: home, base: './' },
+    { html: await readFile(join(output, 'privacy/index.html'), 'utf8'), base: '../' },
+    { html: await readFile(join(output, 'privacy/escape-me/index.html'), 'utf8'), base: '../../' },
+  ];
+  for (const { html, base } of pages) {
     assert.ok(html.includes(escapeHTML(injection)));
-    assert.doesNotMatch(html, /<img\b|<script>alert|href="(?:javascript:|data:)/i);
+    // The shared header intentionally contains one image. Only that exact tag
+    // is allowed; injected images or extra attributes must still fail the test.
+    const logo = `<img class="brand-mark" src="${base}assets/logo.png" alt="" width="34" height="34">`;
+    assert.ok(html.includes(logo), 'the trusted header logo is present');
+    assert.doesNotMatch(html.replace(logo, ''), /<img\b|<script>alert|href="(?:javascript:|data:)/i);
   }
   assert.ok(home.includes('/commits/main'), 'unsafe last-commit URL falls back to the repository history');
 });
