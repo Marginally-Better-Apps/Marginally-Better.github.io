@@ -36,7 +36,7 @@ export async function buildSite({ source = root, output = resolve(root, '_site')
   await rm(output, { recursive: true, force: true });
   await mkdir(resolve(output, 'assets'), { recursive: true });
   await mkdir(resolve(output, 'privacy'), { recursive: true });
-  await Promise.all(['styles.css', 'app.js', 'theme.js', 'favicon.svg'].map(file => cp(resolve(source, 'src', file), resolve(output, 'assets', file))));
+  await Promise.all(['styles.css', 'app.js', 'theme.js', 'logo.jpg', 'logo.png'].map(file => cp(resolve(source, 'src', file), resolve(output, 'assets', file))));
   await writeFile(resolve(output, '.nojekyll'), '');
   await writeFile(resolve(output, 'index.html'), homePage(snapshot, projects));
   await writeFile(resolve(output, 'privacy/index.html'), privacyIndex(projects));

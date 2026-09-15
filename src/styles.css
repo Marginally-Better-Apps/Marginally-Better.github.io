@@ -13,7 +13,6 @@
   --control-hover: #a0a18f;
   --warning: #976528;
   --success: #527441;
-  --logo-ink: #fff9f4;
   --icon-bg: #f2f0e8;
   --icon-ink: #69695c;
   --icon-line: #e7e4dc;
@@ -132,8 +131,7 @@ svg { display: inline-block; flex: none; vertical-align: middle; }
 .skip-link:focus { top: 12px; }
 .site-header { height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 28px; border-bottom: 1px solid var(--line); }
 .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 660; letter-spacing: -.5px; }
-.brand-mark { width: 34px; height: 34px; background: var(--orange); border-radius: 8px; display: grid; place-items: center; color: var(--logo-ink); }
-.brand-mark svg { width: 22px; height: 22px; }
+.brand-mark { width: 34px; height: 34px; border-radius: 8px; display: block; object-fit: contain; flex: none; }
 .site-nav { display: flex; gap: 32px; align-items: center; font-size: 13px; font-weight: 500; }
 .site-nav a { display: inline-flex; gap: 7px; align-items: center; }
 .site-nav .current { color: var(--accent); }
@@ -252,7 +250,6 @@ input::placeholder { color: var(--muted); opacity: 1; }
   .site-header { height: 88px; gap: 12px; }
   .brand { font-size: 14px; gap: 8px; }
   .brand-mark { width: 28px; height: 28px; border-radius: 7px; }
-  .brand-mark svg { width: 19px; height: 19px; }
   .site-nav { gap: 16px; font-size: 12px; }
   .site-nav .github-label { display: none; }
   .site-nav .github-link svg { width: 17px; height: 17px; }

@@ -66,7 +66,8 @@ Leading-dot repository names receive a `~` prefix in their URL (`.github` → `p
 | `src/app.js` | Optional search, sorting, and relative dates |
 | `src/theme.js` | System-aware light/dark mode and saved preference |
 | `src/markdown.mjs` | Safe build-time Markdown rendering |
-| `src/favicon.svg` | Site mark |
+| `src/logo.jpg` | Original logo used for the browser tab icon |
+| `src/logo.png` | RGB header logo, prepared at 4× display size |
 | `scripts/build.mjs` | Generates the complete static site |
 | `scripts/update-projects.mjs` | GitHub repository and commit data |
 | `scripts/update-policies.mjs` | Discover and fetch privacy Markdown from main |

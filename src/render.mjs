@@ -73,7 +73,7 @@ export function layout({ title, description, body, base = './', page = 'projects
   <meta property="og:title" content="${escapeHTML(title)}">
   <meta property="og:description" content="${escapeHTML(description)}">
   <meta property="og:type" content="website">
-  <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="${base}assets/logo.jpg" type="image/jpeg">
   <script src="${base}assets/theme.js"></script>
   <link rel="stylesheet" href="${base}assets/styles.css">
   <script src="${base}assets/app.js" defer></script>
@@ -82,7 +82,7 @@ export function layout({ title, description, body, base = './', page = 'projects
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="container">
     <header class="site-header">
-      <a class="brand" href="${base}" aria-label="Marginally Better home"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M5 19v-6m7 6V8m7 11V3"/></svg></span>Marginally Better.</a>
+      <a class="brand" href="${base}" aria-label="Marginally Better home"><img class="brand-mark" src="${base}assets/logo.png" alt="" width="34" height="34">Marginally Better.</a>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="${base}#projects"${page === 'projects' ? ' class="current"' : ''}>Projects</a>
         <a href="${base}privacy/"${page === 'privacy' ? ' class="current" aria-current="page"' : ''}>Privacy</a>

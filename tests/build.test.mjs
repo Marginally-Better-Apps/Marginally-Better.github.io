@@ -41,7 +41,7 @@ async function fixture(t, { projects, details = {}, policies = {}, fetchedPolici
     writeFile(join(source, 'data/projects.json'), JSON.stringify({ organization: 'Marginally-Better-Apps', updated_at: updatedAt, projects })),
     writeFile(join(source, 'data/project-details.json'), JSON.stringify(details)),
     writeFile(join(source, 'data/policies.json'), JSON.stringify({ organization: 'Marginally-Better-Apps', branch: 'main', policies: fetchedPolicies })),
-    ...['app.js', 'theme.js', 'styles.css', 'favicon.svg'].map(file => writeFile(join(source, 'src', file), '')),
+    ...['app.js', 'theme.js', 'styles.css', 'logo.jpg', 'logo.png'].map(file => writeFile(join(source, 'src', file), '')),
     ...Object.entries(policies).map(([name, content]) => writeFile(join(source, 'policies', `${name}.html`), content)),
   ]);
   const built = await buildSite({ source, output });
