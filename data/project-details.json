@@ -1,0 +1,13 @@
+{
+  ".github": { "title": "About the organization", "description": "The home of Marginally Better on GitHub.", "icon": "code" },
+  "MB-Metronome": { "title": "Metronome", "icon": "metronome" },
+  "MB-jellyfin-music-player": { "title": "Jellyfin Music Player", "description": "A new project, just getting started.", "icon": "music" },
+  "MB-tuner": { "title": "Tuner", "icon": "wave" },
+  "MB-converter": { "title": "Converter", "description": "Convert and compress photos, videos, and audio on iPhone and iPad.", "icon": "arrows" },
+  "MB-Music-Tools": { "title": "Music Tools", "icon": "music" },
+  "MB-QR-Code-Scanner": { "title": "QR Code Scanner", "description": "A simple QR code scanner with a familiar, native feel.", "icon": "qr" },
+  "MB-document-scanner": { "title": "Document Scanner", "description": "Scan documents with on-device text recognition and PDF or JPEG export.", "icon": "scan" },
+  "Autoloader": { "title": "Autoloader", "icon": "download" },
+  "MB-photos": { "title": "Photos", "description": "Organize your photo library and export verified copies to Windows over your local network.", "icon": "photo" },
+  "Marginally-Better.github.io": { "title": "This website", "description": "Our projects, latest activity, and privacy policies, all in one place.", "icon": "globe" }
+}

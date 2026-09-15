@@ -1,0 +1,20 @@
+{
+  "name": "marginally-better-pages",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "update": "node scripts/update-projects.mjs && node scripts/update-policies.mjs",
+    "update:policies": "node scripts/update-policies.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "markdown-it": "14.3.2"
+  }
+}
