@@ -57,6 +57,10 @@ See [policies/README.md](policies/README.md) for the authoring workflow.
 
 Leading-dot repository names receive a `~` prefix in their URL (`.github` → `privacy/~.github/`) so the Pages upload includes them.
 
+## Support pages
+
+Every public project gets a support page at `support/<lowercase-repository-name>/`, for example `support/mb-photos/`, and the directory is at `support/`. It lists the help email, the project's GitHub issues, and its privacy policy when one is published. Use it as the App Store support URL. No per-project setup is needed; the URL stays stable while the repository name does.
+
 ## Source layout
 
 | Path | Purpose |

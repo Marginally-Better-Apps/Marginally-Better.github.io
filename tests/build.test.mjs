@@ -60,6 +60,10 @@ test('the current snapshot renders every project and policy page without running
     assert.ok(home.includes(`href="./privacy/${project.slug}/"`), `${project.name} links to its policy`);
     const page = await readFile(join(output, 'privacy', project.slug, 'index.html'), 'utf8');
     assert.ok(page.includes(`<h1>${escapeHTML(project.title)}</h1>`));
+    assert.ok(home.includes(`href="./support/${project.slug}/"`), `${project.name} links to its support page`);
+    const support = await readFile(join(output, 'support', project.slug, 'index.html'), 'utf8');
+    assert.ok(support.includes(`<h1>${escapeHTML(project.title)}</h1>`));
+    assert.ok(support.includes('mailto:help@marginally-better.app?subject='));
     if (project.last_commit_at) assert.ok(home.includes(`datetime="${new Date(project.last_commit_at).toISOString()}"`));
   }
   assert.ok(home.includes('No commits yet'), 'the empty Pages repository is represented accurately');
@@ -204,4 +208,20 @@ test('stale commit values remain visible and unknown values never appear as zero
   assert.match(unknown, /<span>Unavailable<\/span>/);
   assert.doesNotMatch(unknown, /No commits yet/);
   assert.match(home, /Some commit stats could not be refreshed/);
+});
+
+test('support pages link to contact, issues, and the published policy only', async t => {
+  const { output } = await fixture(t, {
+    projects: [repository('With-Policy'), repository('No-Policy')],
+    details: { 'With-Policy': { title: 'With & Policy' } },
+    policies: { 'With-Policy': '<h2>Policy</h2><p>Content.</p>' },
+  });
+  const withPolicy = await readFile(join(output, 'support/with-policy/index.html'), 'utf8');
+  assert.ok(withPolicy.includes('href="mailto:help@marginally-better.app?subject=With%20%26%20Policy%20support"'));
+  assert.ok(withPolicy.includes('href="https://github.com/Marginally-Better-Apps/With-Policy/issues"'));
+  assert.ok(withPolicy.includes('href="../../privacy/with-policy/"'));
+  const noPolicy = await readFile(join(output, 'support/no-policy/index.html'), 'utf8');
+  assert.doesNotMatch(noPolicy, /privacy\/no-policy/);
+  const index = await readFile(join(output, 'support/index.html'), 'utf8');
+  assert.ok(index.includes('href="./with-policy/"') && index.includes('href="./no-policy/"'));
 });
