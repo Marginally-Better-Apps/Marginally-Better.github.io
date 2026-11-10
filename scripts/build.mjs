@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir, rm, cp } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { homePage, privacyIndex, policyPage, projectSlug } from '../src/render.mjs';
+import { homePage, privacyIndex, policyPage, projectSlug, supportIndex, supportPage } from '../src/render.mjs';
 import { renderPolicyMarkdown } from '../src/markdown.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -36,16 +36,21 @@ export async function buildSite({ source = root, output = resolve(root, '_site')
   await rm(output, { recursive: true, force: true });
   await mkdir(resolve(output, 'assets'), { recursive: true });
   await mkdir(resolve(output, 'privacy'), { recursive: true });
+  await mkdir(resolve(output, 'support'), { recursive: true });
   await Promise.all(['styles.css', 'app.js', 'theme.js', 'logo.jpg', 'logo.png'].map(file => cp(resolve(source, 'src', file), resolve(output, 'assets', file))));
   await writeFile(resolve(output, '.nojekyll'), '');
   await writeFile(resolve(output, 'index.html'), homePage(snapshot, projects));
   await writeFile(resolve(output, 'privacy/index.html'), privacyIndex(projects));
+  await writeFile(resolve(output, 'support/index.html'), supportIndex(projects));
   for (const project of projects) {
     const directory = resolve(output, 'privacy', project.slug);
     await mkdir(directory, { recursive: true });
     await writeFile(resolve(directory, 'index.html'), policyPage(project, project.policy));
+    const support = resolve(output, 'support', project.slug);
+    await mkdir(support, { recursive: true });
+    await writeFile(resolve(support, 'index.html'), supportPage(project));
   }
-  console.log(`Built ${projects.length} projects and ${projects.length} policy pages in ${output}`);
+  console.log(`Built ${projects.length} projects, ${projects.length} policy pages, and ${projects.length} support pages in ${output}`);
   return projects;
 }
 

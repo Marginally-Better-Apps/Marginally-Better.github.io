@@ -1,5 +1,6 @@
 export const ORGANIZATION = 'Marginally-Better-Apps';
 export const ORG_URL = `https://github.com/${ORGANIZATION}`;
+export const SUPPORT_EMAIL = 'help@marginally-better.app';
 
 export function escapeHTML(value = '') {
   return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
@@ -58,7 +59,7 @@ export function timeTag(value, relative = true) {
 }
 
 function footer(base) {
-  return `<footer class="site-footer"><span>Marginally Better</span><div class="footer-links"><a href="${base}privacy/">Privacy policies</a><a href="${ORG_URL}">GitHub ${icon('external')}</a></div></footer>`;
+  return `<footer class="site-footer"><span>Marginally Better</span><div class="footer-links"><a href="${base}support/">Support</a><a href="${base}privacy/">Privacy policies</a><a href="${ORG_URL}">GitHub ${icon('external')}</a></div></footer>`;
 }
 
 export function layout({ title, description, body, base = './', page = 'projects' }) {
@@ -113,7 +114,7 @@ export function projectRow(project) {
       <div class="project-copy">
         <a class="project-name" href="${repository}" title="${escapeHTML(p.name)}">${name}${icon('external')}</a>
         ${p.description ? `<p class="project-description">${escapeHTML(p.description)}</p>` : '<div class="project-description"></div>'}
-        <div class="project-meta">${language}<a class="policy-link" href="./privacy/${p.slug}/">Privacy policy</a>${safeURL(p.homepage) ? `<span class="meta-divider" aria-hidden="true"></span><a href="${safeURL(p.homepage)}">Website</a>` : ''}${p.archived ? '<span class="archived">Archived</span>' : ''}</div>
+        <div class="project-meta">${language}<a class="policy-link" href="./support/${p.slug}/">Support</a><span class="meta-divider" aria-hidden="true"></span><a class="policy-link" href="./privacy/${p.slug}/">Privacy policy</a>${safeURL(p.homepage) ? `<span class="meta-divider" aria-hidden="true"></span><a href="${safeURL(p.homepage)}">Website</a>` : ''}${p.archived ? '<span class="archived">Archived</span>' : ''}</div>
       </div>
     </div>
     ${metric('Stars', p.stars, `${repository}/stargazers`)}
@@ -151,4 +152,16 @@ export function privacyIndex(projects) {
 export function policyPage(project, content = '') {
   const policy = content || `<div class="policy-placeholder"><h2>Policy not yet published</h2><p>A privacy policy for ${escapeHTML(project.title)} hasn’t been added here yet. This page will be updated when it’s available.</p><a class="button" href="${safeURL(project.url)}">Visit the project ${icon('external')}</a></div>`;
   return layout({ title: `${project.title} privacy policy — Marginally Better`, description: `Privacy information for ${project.title} by Marginally Better.`, base: '../../', page: 'privacy', body: `<section class="page-intro"><a class="back-link" href="../">${icon('arrow')}All privacy policies</a><p class="eyebrow">Privacy policy</p><h1>${escapeHTML(project.title)}</h1></section><article class="policy-content" aria-label="${escapeHTML(project.title)} privacy policy">${policy}</article>` });
+}
+
+export function supportIndex(projects) {
+  const entries = [...projects].sort((a, b) => a.title.localeCompare(b.title)).map(p => `<li class="policy-entry"><a href="./${p.slug}/"><span class="project-icon ${escapeHTML(p.icon)}">${icon(p.icon)}</span><span class="policy-entry-name">${escapeHTML(p.title)}</span><span class="policy-status published">Get help</span>${icon('arrow')}</a></li>`).join('\n');
+  return layout({ title: 'Support — Marginally Better', description: 'Get help with any Marginally Better project.', base: '../', page: 'support', body: `<section class="page-intro"><h1>Support</h1></section><ul class="policy-list">${entries}</ul>` });
+}
+
+export function supportPage(project) {
+  const mail = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`${project.title} support`)}`;
+  const issues = safeURL(`${project.url}/issues`);
+  const privacy = project.policyPublished ? `<h2>Privacy</h2><p>Read the <a href="../../privacy/${project.slug}/">${escapeHTML(project.title)} privacy policy</a>.</p>` : '';
+  return layout({ title: `${project.title} support — Marginally Better`, description: `Get help with ${project.title} by Marginally Better.`, base: '../../', page: 'support', body: `<section class="page-intro"><a class="back-link" href="../">${icon('arrow')}All support pages</a><p class="eyebrow">Support</p><h1>${escapeHTML(project.title)}</h1></section><article class="policy-content" aria-label="${escapeHTML(project.title)} support"><h2>Contact us</h2><p>Email <a href="${escapeHTML(mail)}">${SUPPORT_EMAIL}</a> with a short description of the problem, your device, and the app version.</p>${issues ? `<h2>Report a bug or request a feature</h2><p>You can also <a href="${issues}">open an issue on GitHub</a>.</p>` : ''}${privacy}</article>` });
 }
